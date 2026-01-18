@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -58,6 +59,27 @@ namespace DesafioTecnicoSenai.API.Areas.Autenticacao.Controllers
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 expiration = token.ValidTo
             });
+        }
+
+        [HttpPost("recuperar-senha")]
+        [AllowAnonymousAttribute]
+        public async Task<IActionResult> RecuperarSenha(UserLoginDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+                return Ok();
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var encodedToken = Uri.EscapeDataString(token);
+
+            var resetLink = $"{_config["FrontEnd:ResetPasswordUrl"]}?email={model.Email}&token={encodedToken}";
+
+            // Aqui você envia o email (SMTP, SendGrid, etc)
+            // emailService.Send(model.Email, resetLink);
+
+            return Ok();
         }
     }
 }
