@@ -1,0 +1,42 @@
+@FactoryControll_API_HostAddress = http://localhost:5137
+
+### Listar todos os cargos
+GET {{FactoryControll_API_HostAddress}}/api/Cargo
+Accept: application/json
+
+###
+
+### Obter cargo por ID
+GET {{FactoryControll_API_HostAddress}}/api/Cargo/1
+Accept: application/json
+
+###
+
+### Criar novo cargo
+POST {{FactoryControll_API_HostAddress}}/api/Cargo
+Content-Type: application/json
+
+{
+  "nome": "Analista",
+  "descricao": "Analista de Sistemas"
+}
+
+###
+
+### Atualizar cargo existente
+PUT {{FactoryControll_API_HostAddress}}/api/Cargo/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "nome": "Analista Sênior",
+  "descricao": "Analista de Sistemas Sênior"
+}
+
+###
+
+### Deletar cargo
+DELETE {{FactoryControll_API_HostAddress}}/api/Cargo/1
+Accept: application/json
+
+###
