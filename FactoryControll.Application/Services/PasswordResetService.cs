@@ -26,7 +26,9 @@ namespace FactoryControll.Application.Services
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
             var encodedEmail = Uri.EscapeDataString(email);
-            var resetLink = $"{_configuration["FrontEnd:ResetPasswordUrl"]}?email={encodedEmail}&token={encodedToken}";
+            var resetPasswordUrl = _configuration["FrontEnd:ResetPasswordUrl"]
+                ?? throw new InvalidOperationException("FrontEnd:ResetPasswordUrl não está configurado em appsettings.json.");
+            var resetLink = $"{resetPasswordUrl}?email={encodedEmail}&token={encodedToken}";
 
             var mensagem = new EmailMessageDto
             {

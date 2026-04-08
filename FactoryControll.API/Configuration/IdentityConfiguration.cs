@@ -19,6 +19,9 @@ namespace FactoryControll.API.Configuration
                 .AddEntityFrameworkStores<FactoryControllDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<DataProtectionTokenProviderOptions>(options =>
+                options.TokenLifespan = TimeSpan.FromHours(1));
+
             return services;
         }
 

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FactoryControll.Domain\FactoryControll.Domain.csproj" />
-<ProjectReference Include="..\FactoryControll.InfraFramework\FactoryControll.InfraFramework.csproj" />
+    <ProjectReference Include="..\FactoryControll.InfraFramework\FactoryControll.InfraFramework.csproj" />
   </ItemGroup>
 
 </Project>
