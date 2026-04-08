@@ -25,7 +25,8 @@ namespace FactoryControll.Application.Services
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
-            var resetLink = $"{_configuration["FrontEnd:ResetPasswordUrl"]}?email={email}&token={encodedToken}";
+            var encodedEmail = Uri.EscapeDataString(email);
+            var resetLink = $"{_configuration["FrontEnd:ResetPasswordUrl"]}?email={encodedEmail}&token={encodedToken}";
 
             var mensagem = new EmailMessageDto
             {
