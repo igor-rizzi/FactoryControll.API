@@ -1,5 +1,7 @@
-﻿using FactoryControll.API.Areas.Autenticacao.Controllers;
+using FactoryControll.API.Areas.Autenticacao.Controllers;
 using FactoryControll.API.Areas.Autenticacao.Models;
+using FactoryControll.Application.Interfaces.Services;
+using FactoryControll.Application.Models;
 using FactoryControll.InfraData.Models.Autenticacao;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +15,7 @@ namespace FactoryControll.Tests.UnitTests.Controllers
         private readonly Mock<UserManager<User>> _userManagerMock;
         private readonly Mock<SignInManager<User>> _signInManagerMock;
         private readonly Mock<IConfiguration> _configMock;
+        private readonly Mock<IPasswordResetService> _passwordResetServiceMock;
         private readonly AutenticacaoController _controller;
 
         public AutenticacaoControllerTests()
@@ -28,7 +31,8 @@ namespace FactoryControll.Tests.UnitTests.Controllers
                 null, null, null, null
             );
             _configMock = new Mock<IConfiguration>();
-            _controller = new AutenticacaoController(_userManagerMock.Object, _configMock.Object, _signInManagerMock.Object);
+            _passwordResetServiceMock = new Mock<IPasswordResetService>();
+            _controller = new AutenticacaoController(_userManagerMock.Object, _configMock.Object, _signInManagerMock.Object, _passwordResetServiceMock.Object);
         }
 
         [Fact]
@@ -85,6 +89,67 @@ namespace FactoryControll.Tests.UnitTests.Controllers
             Assert.NotNull(valueType.GetProperty("token"));
             Assert.NotNull(valueType.GetProperty("expiration"));
         }
-    }
 
+        [Fact]
+        public async Task RecuperarSenha_CallsServiceAndReturnsOk()
+        {
+            // Arrange
+            var dto = new UserLoginDto { Email = "test@test.com", Password = "" };
+            _passwordResetServiceMock
+                .Setup(x => x.SolicitarRecuperacaoAsync(dto.Email))
+                .Returns(Task.CompletedTask);
+
+            // Act
+            var result = await _controller.RecuperarSenha(dto);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+            _passwordResetServiceMock.Verify(x => x.SolicitarRecuperacaoAsync(dto.Email), Times.Once);
+        }
+
+        [Fact]
+        public async Task RedefinirSenha_ReturnsOk_WhenSucceeds()
+        {
+            // Arrange
+            var dto = new ResetarSenhaDto
+            {
+                Email = "test@test.com",
+                Token = "valid-token",
+                NovaSenha = "NewPass@123",
+                ConfirmarNovaSenha = "NewPass@123"
+            };
+            _passwordResetServiceMock
+                .Setup(x => x.RedefinirSenhaAsync(dto))
+                .ReturnsAsync(IdentityResult.Success);
+
+            // Act
+            var result = await _controller.RedefinirSenha(dto);
+
+            // Assert
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public async Task RedefinirSenha_ReturnsBadRequest_WhenFails()
+        {
+            // Arrange
+            var dto = new ResetarSenhaDto
+            {
+                Email = "test@test.com",
+                Token = "invalid-token",
+                NovaSenha = "NewPass@123",
+                ConfirmarNovaSenha = "NewPass@123"
+            };
+            var failedResult = IdentityResult.Failed(new IdentityError { Code = "InvalidToken", Description = "Token inválido." });
+            _passwordResetServiceMock
+                .Setup(x => x.RedefinirSenhaAsync(dto))
+                .ReturnsAsync(failedResult);
+
+            // Act
+            var result = await _controller.RedefinirSenha(dto);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
+        }
+    }
 }
