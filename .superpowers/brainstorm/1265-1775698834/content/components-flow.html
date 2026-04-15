@@ -1,0 +1,124 @@
+<h2>Componentes de UI e Fluxo de Dados</h2>
+<p class="subtitle">Como as páginas são construídas e como os dados fluem da API para a tela</p>
+
+<div style="display:flex;flex-direction:column;gap:16px;max-width:960px;">
+
+  <!-- Layout components -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:12px;font-size:13px;">🧩 Componentes de Layout (compartilhados)</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:11px;">
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;color:#6366f1;margin-bottom:4px;">Sidebar</div>
+        <div style="color:#64748b;">Colapsável, menu por role, item ativo destacado, logo FC</div>
+      </div>
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;color:#6366f1;margin-bottom:4px;">Topbar</div>
+        <div style="color:#64748b;">Breadcrumb, ThemeToggle (🌓), avatar + dropdown com logout</div>
+      </div>
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;color:#6366f1;margin-bottom:4px;">DataTable</div>
+        <div style="color:#64748b;">Tabela genérica com paginação, busca e ações por linha</div>
+      </div>
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;color:#6366f1;margin-bottom:4px;">PageHeader</div>
+        <div style="color:#64748b;">Título + subtítulo + botão de ação primária (ex: "Novo")</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data flow -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:12px;font-size:13px;">🔄 Fluxo de Dados (por página de listagem)</div>
+    <div style="display:flex;align-items:flex-start;gap:10px;font-size:11px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="background:#e0e7ff;color:#3730a3;padding:6px 12px;border-radius:6px;font-weight:bold;">Page.tsx</div>
+        <div style="color:#94a3b8;font-size:10px;margin-top:3px;">Server ou Client component</div>
+      </div>
+      <div style="color:#94a3b8;margin-top:8px;">→</div>
+      <div style="text-align:center;">
+        <div style="background:#d1fae5;color:#065f46;padding:6px 12px;border-radius:6px;font-weight:bold;">useQuery()</div>
+        <div style="color:#94a3b8;font-size:10px;margin-top:3px;">TanStack Query</div>
+      </div>
+      <div style="color:#94a3b8;margin-top:8px;">→</div>
+      <div style="text-align:center;">
+        <div style="background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;font-weight:bold;">service.listar()</div>
+        <div style="color:#94a3b8;font-size:10px;margin-top:3px;">lib/api/[módulo].service.ts</div>
+      </div>
+      <div style="color:#94a3b8;margin-top:8px;">→</div>
+      <div style="text-align:center;">
+        <div style="background:#fee2e2;color:#991b1b;padding:6px 12px;border-radius:6px;font-weight:bold;">axios.get()</div>
+        <div style="color:#94a3b8;font-size:10px;margin-top:3px;">+ Bearer token auto</div>
+      </div>
+      <div style="color:#94a3b8;margin-top:8px;">→</div>
+      <div style="text-align:center;">
+        <div style="background:#f0fdf4;color:#166534;padding:6px 12px;border-radius:6px;font-weight:bold;">FactoryControll.API</div>
+        <div style="color:#94a3b8;font-size:10px;margin-top:3px;">GET /api/[endpoint]/listar</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:#64748b;">
+      Para mutations (criar/editar/deletar): <code>useMutation()</code> → <code>service.inserir()</code> → <code>queryClient.invalidateQueries()</code> para recarregar a lista automaticamente.
+    </div>
+  </div>
+
+  <!-- Page patterns -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:12px;font-size:13px;">📄 Padrão de cada módulo CRUD</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;">
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;margin-bottom:6px;">Listagem <code style="color:#6366f1;">/[módulo]</code></div>
+        <ul style="color:#64748b;margin:0;padding-left:14px;line-height:1.8;">
+          <li>PageHeader + botão "Novo"</li>
+          <li>DataTable paginada</li>
+          <li>Ações: Editar | Deletar</li>
+          <li>Toast de confirmação</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;margin-bottom:6px;">Formulário <code style="color:#6366f1;">/novo</code> e <code style="color:#6366f1;">/[id]</code></div>
+        <ul style="color:#64748b;margin:0;padding-left:14px;line-height:1.8;">
+          <li>shadcn Form + react-hook-form</li>
+          <li>Validação no cliente (zod)</li>
+          <li>Estado loading no submit</li>
+          <li>Redirect após sucesso</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--border,#e2e8f0);border-radius:6px;padding:10px;">
+        <div style="font-weight:bold;margin-bottom:6px;">Reembolsos (especial)</div>
+        <ul style="color:#64748b;margin:0;padding-left:14px;line-height:1.8;">
+          <li>Upload de comprovante</li>
+          <li>Badge de status colorido</li>
+          <li>Ações Aprovar/Reprovar (role)</li>
+          <li>Preview do arquivo anexado</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error handling -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:10px;font-size:13px;">⚠️ Tratamento de erros e estados</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:11px;">
+      <div style="text-align:center;padding:8px;border:1px solid #fde68a;border-radius:6px;background:#fffbeb;">
+        <div style="font-size:16px;">⏳</div>
+        <div style="font-weight:bold;color:#92400e;">Loading</div>
+        <div style="color:#64748b;">Skeleton em tabelas e cards</div>
+      </div>
+      <div style="text-align:center;padding:8px;border:1px solid #fca5a5;border-radius:6px;background:#fef2f2;">
+        <div style="font-size:16px;">❌</div>
+        <div style="font-weight:bold;color:#991b1b;">Erro API</div>
+        <div style="color:#64748b;">Toast de erro com mensagem da API</div>
+      </div>
+      <div style="text-align:center;padding:8px;border:1px solid #a5b4fc;border-radius:6px;background:#eef2ff;">
+        <div style="font-size:16px;">🚫</div>
+        <div style="font-weight:bold;color:#3730a3;">Sem permissão</div>
+        <div style="color:#64748b;">Redirect 403 → /unauthorized</div>
+      </div>
+      <div style="text-align:center;padding:8px;border:1px solid #6ee7b7;border-radius:6px;background:#f0fdf4;">
+        <div style="font-size:16px;">✅</div>
+        <div style="font-weight:bold;color:#065f46;">Sucesso</div>
+        <div style="color:#64748b;">Toast verde + invalidate query</div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,56 @@
+<h2>Quais módulos entram no escopo?</h2>
+<p class="subtitle">Selecione todos os módulos que o frontend deve cobrir. Você pode selecionar múltiplos.</p>
+
+<div class="options" data-multiselect>
+
+  <div class="option" data-choice="auth" onclick="toggleSelect(this)" style="opacity:0.6;cursor:not-allowed;" title="Obrigatório">
+    <div class="letter">🔒</div>
+    <div class="content">
+      <h3>Autenticação <span style="font-size:11px;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:10px;margin-left:6px;">obrigatório</span></h3>
+      <p>Login, logout, recuperação de senha, redefinição de senha, controle de sessão com JWT + refresh token.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="dashboard" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Dashboard</h3>
+      <p>Página inicial com resumo: total de colaboradores ativos, reembolsos pendentes/aprovados, cards de métricas rápidas.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="colaboradores" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Colaboradores</h3>
+      <p>Listagem paginada, cadastro, edição e desligamento de colaboradores. Vinculação com usuário do sistema.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="reembolsos" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Reembolsos</h3>
+      <p>Listagem de solicitações, criação de novo reembolso (com upload de comprovante), aprovação/reprovação pelo financeiro, visualização de status.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="usuarios" onclick="toggleSelect(this)">
+    <div class="letter">D</div>
+    <div class="content">
+      <h3>Usuários</h3>
+      <p>Gestão de usuários do sistema — criar, listar e remover usuários com seus tipos (Administrador, Colaborador, Analista Financeiro).</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="admin" onclick="toggleSelect(this)">
+    <div class="letter">E</div>
+    <div class="content">
+      <h3>Administração (Cargo, Função, Tipo de Despesa)</h3>
+      <p>Tabelas de apoio: cadastro e manutenção de cargos, funções e tipos de despesa. Geralmente acesso restrito ao Administrador.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:16px;">Selecione quantos quiser, depois confirme aqui no terminal.</p>

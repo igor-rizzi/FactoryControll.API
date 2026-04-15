@@ -1,0 +1,49 @@
+<h2>Qual biblioteca de UI?</h2>
+<p class="subtitle">Escolha o design system e componentes que usaremos no frontend</p>
+
+<div class="options">
+  <div class="option" data-choice="shadcn" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Tailwind CSS + shadcn/ui</h3>
+      <p>Componentes headless copiados direto para o projeto (não é uma dependência — você possui o código). Visual moderno e limpo, altamente customizável.</p>
+      <ul>
+        <li>✅ Componentes no seu código (sem lock-in)</li>
+        <li>✅ Visual profissional e moderno out-of-the-box</li>
+        <li>✅ Integração oficial com Next.js</li>
+        <li>✅ Tailwind = sem CSS externo, tudo inline</li>
+        <li>⚠️ Requer familiaridade com Tailwind</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="mui" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Material UI (MUI v6)</h3>
+      <p>Biblioteca completa baseada no Google Material Design. Componentes prontos para tudo: tabelas, formulários, dialogs, etc. Visual familiar e empresarial.</p>
+      <ul>
+        <li>✅ Componentes muito completos (DataGrid, etc.)</li>
+        <li>✅ Temas e customização via sistema próprio</li>
+        <li>✅ Muito usado em sistemas internos/corporativos</li>
+        <li>⚠️ Bundle maior</li>
+        <li>⚠️ Visual "genérico" se não customizado</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="antd" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Ant Design (antd v5)</h3>
+      <p>Design system enterprise-grade da Alibaba. Extremamente completo, focado em sistemas de gestão (exatamente o caso do FactoryControll).</p>
+      <ul>
+        <li>✅ Ideal para sistemas de gestão/ERP</li>
+        <li>✅ Tabelas, formulários, layouts prontos</li>
+        <li>✅ ProComponents (ProTable, ProForm) para CRUD rápido</li>
+        <li>⚠️ Visual mais "enterprise", menos moderno</li>
+        <li>⚠️ Bundle grande</li>
+      </ul>
+    </div>
+  </div>
+</div>

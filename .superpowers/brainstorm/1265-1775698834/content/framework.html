@@ -1,0 +1,49 @@
+<h2>Qual framework React usar?</h2>
+<p class="subtitle">Você pediu React sem Vite — qual dessas abordagens se encaixa melhor no projeto?</p>
+
+<div class="options">
+  <div class="option" data-choice="nextjs" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Next.js (App Router)</h3>
+      <p>Framework React full-stack com SSR, SSG e rotas baseadas em arquivos. Ecossistema maduro, excelente DX, suporte nativo a JWT via middleware. É o padrão da indústria para SPAs + SSR hoje.</p>
+      <ul>
+        <li>✅ Roteamento por arquivos (sem config manual)</li>
+        <li>✅ Middleware nativo para auth JWT</li>
+        <li>✅ Build com Turbopack (não usa Vite)</li>
+        <li>✅ Grande comunidade e docs extensas</li>
+        <li>⚠️ Mais opinionado — estrutura define o projeto</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="remix" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Remix</h3>
+      <p>Framework React focado em web standards (fetch API, form actions). SSR por padrão, progressive enhancement nativo. Usa esbuild/Express internamente, não Vite por padrão.</p>
+      <ul>
+        <li>✅ Filosofia de web standards (formulários nativos)</li>
+        <li>✅ Loaders/Actions elegantes para data fetching</li>
+        <li>✅ Ótimo para apps com muitos formulários</li>
+        <li>⚠️ Comunidade menor que Next.js</li>
+        <li>⚠️ Curva de aprendizado diferente</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="cra-webpack" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>React + Webpack (SPA puro)</h3>
+      <p>Configuração manual com webpack + babel. SPA clássico sem SSR. Total controle sobre o tooling.</p>
+      <ul>
+        <li>✅ Controle total da configuração</li>
+        <li>✅ SPA simples, sem complexidade de servidor</li>
+        <li>⚠️ Configuração manual e trabalhosa</li>
+        <li>⚠️ CRA oficialmente abandonado pelo Meta</li>
+        <li>⚠️ Build mais lento que alternativas modernas</li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+<h2>Estrutura de Pastas e Rotas</h2>
+<p class="subtitle">Organização do projeto Next.js e as páginas de cada módulo</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:960px;">
+
+  <!-- Left: folder structure -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:12px;font-size:13px;">📁 factorycontroll-web/</div>
+    <pre style="font-size:11px;line-height:1.7;color:var(--text,#334155);margin:0;font-family:monospace;">
+<span style="color:#6366f1;">app/</span>
+├── <span style="color:#059669;">(auth)/</span>               <span style="color:#94a3b8;">← rotas públicas</span>
+│   ├── login/
+│   ├── recuperar-senha/
+│   └── redefinir-senha/
+├── <span style="color:#059669;">(dashboard)/</span>          <span style="color:#94a3b8;">← rotas protegidas</span>
+│   ├── layout.tsx        <span style="color:#94a3b8;">← Sidebar + Topbar</span>
+│   ├── page.tsx          <span style="color:#94a3b8;">← Dashboard</span>
+│   ├── colaboradores/
+│   │   ├── page.tsx      <span style="color:#94a3b8;">← listagem</span>
+│   │   ├── novo/page.tsx
+│   │   └── [id]/page.tsx
+│   ├── reembolsos/
+│   │   ├── page.tsx
+│   │   ├── novo/page.tsx
+│   │   └── [id]/page.tsx
+│   ├── usuarios/
+│   │   ├── page.tsx
+│   │   └── novo/page.tsx
+│   └── administracao/
+│       ├── cargos/
+│       ├── funcoes/
+│       └── tipos-despesa/
+├── api/auth/[...nextauth]/ <span style="color:#94a3b8;">← NextAuth handler</span>
+└── layout.tsx              <span style="color:#94a3b8;">← root (ThemeProvider)</span>
+
+<span style="color:#6366f1;">components/</span>
+├── ui/                 <span style="color:#94a3b8;">← shadcn components</span>
+├── layout/             <span style="color:#94a3b8;">← Sidebar, Topbar, ThemeToggle</span>
+└── [feature]/          <span style="color:#94a3b8;">← componentes por módulo</span>
+
+<span style="color:#6366f1;">lib/</span>
+├── api/
+│   ├── axios.ts        <span style="color:#94a3b8;">← instância + interceptors</span>
+│   ├── auth.service.ts
+│   ├── colaboradores.service.ts
+│   ├── reembolsos.service.ts
+│   ├── usuarios.service.ts
+│   └── admin.service.ts
+├── auth.ts             <span style="color:#94a3b8;">← config NextAuth</span>
+└── query-client.ts     <span style="color:#94a3b8;">← TanStack Query setup</span>
+
+<span style="color:#6366f1;">middleware.ts</span>           <span style="color:#94a3b8;">← proteção de rotas</span>
+<span style="color:#6366f1;">auth.ts</span>                 <span style="color:#94a3b8;">← NextAuth exportado</span></pre>
+  </div>
+
+  <!-- Right: routes table -->
+  <div style="display:flex;flex-direction:column;gap:10px;">
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;margin-bottom:8px;font-size:13px;color:#dc2626;">🔓 Rotas Públicas</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;">
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/login</code><span style="color:#64748b;">Login com email + senha</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/recuperar-senha</code><span style="color:#64748b;">Solicitar reset de senha</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/redefinir-senha</code><span style="color:#64748b;">Nova senha via token email</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;margin-bottom:8px;font-size:13px;color:#059669;">🔒 Rotas Autenticadas (todos os roles)</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;">
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/</code><span style="color:#64748b;">Dashboard — métricas gerais</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/reembolsos</code><span style="color:#64748b;">Lista (filtrado por role)</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/reembolsos/novo</code><span style="color:#64748b;">Criar reembolso</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/reembolsos/[id]</code><span style="color:#64748b;">Detalhe + aprovar/reprovar</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;margin-bottom:8px;font-size:13px;color:#d97706;">👑 Rotas Admin only</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:11px;">
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/colaboradores</code><span style="color:#64748b;">CRUD colaboradores</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/usuarios</code><span style="color:#64748b;">CRUD usuários</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/administracao/cargos</code><span style="color:#64748b;">CRUD cargos</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/administracao/funcoes</code><span style="color:#64748b;">CRUD funções</span></div>
+        <div style="display:flex;justify-content:space-between;"><code style="color:#6366f1;">/administracao/tipos-despesa</code><span style="color:#64748b;">CRUD tipos de despesa</span></div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;margin-bottom:6px;font-size:13px;">🔄 Também na API (novo endpoint)</div>
+      <div style="font-size:11px;color:#64748b;">
+        <code style="color:#dc2626;">POST /api/Autenticacao/refresh-token</code> — será adicionado à FactoryControll.API como parte do escopo deste projeto.
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<h2>Qual tema visual?</h2>
+<p class="subtitle">A identidade visual do sistema — cores e modo padrão</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="dark-blue" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:150px;border-radius:6px;overflow:hidden;display:flex;font-size:10px;">
+        <div style="width:44px;background:#0f172a;padding:8px 5px;display:flex;flex-direction:column;gap:7px;align-items:center;">
+          <div style="color:#38bdf8;font-weight:bold;font-size:11px;margin-bottom:2px;">FC</div>
+          <div style="background:#1e3a5f;width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;">🏠</div>
+          <div style="width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#64748b;">👥</div>
+          <div style="width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#64748b;">💰</div>
+        </div>
+        <div style="flex:1;background:#0f172a;display:flex;flex-direction:column;">
+          <div style="background:#1e293b;border-bottom:1px solid #334155;padding:5px 8px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#94a3b8;font-size:9px;">Dashboard</span>
+            <span style="color:#38bdf8;font-size:9px;">Igor ▾</span>
+          </div>
+          <div style="padding:8px;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+            <div style="background:#1e293b;border:1px solid #334155;border-radius:4px;padding:5px;">
+              <div style="color:#64748b;font-size:8px;">Colaboradores</div>
+              <div style="color:#38bdf8;font-size:16px;font-weight:bold;">24</div>
+            </div>
+            <div style="background:#1e293b;border:1px solid #334155;border-radius:4px;padding:5px;">
+              <div style="color:#64748b;font-size:8px;">Reembolsos</div>
+              <div style="color:#f59e0b;font-size:16px;font-weight:bold;">7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Dark (Azul Noite)</h3>
+      <p>Tema escuro com acentos em azul cyan. Visual moderno e técnico. Reduz cansaço visual em uso prolongado.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="light-clean" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:150px;border-radius:6px;overflow:hidden;display:flex;font-size:10px;">
+        <div style="width:44px;background:#1e40af;padding:8px 5px;display:flex;flex-direction:column;gap:7px;align-items:center;">
+          <div style="color:#fff;font-weight:bold;font-size:11px;margin-bottom:2px;">FC</div>
+          <div style="background:#1d4ed8;width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;">🏠</div>
+          <div style="width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">👥</div>
+          <div style="width:24px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#93c5fd;">💰</div>
+        </div>
+        <div style="flex:1;background:#f8fafc;display:flex;flex-direction:column;">
+          <div style="background:#fff;border-bottom:1px solid #e2e8f0;padding:5px 8px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="color:#475569;font-size:9px;">Dashboard</span>
+            <span style="color:#1e40af;font-size:9px;">Igor ▾</span>
+          </div>
+          <div style="padding:8px;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:5px;box-shadow:0 1px 3px rgba(0,0,0,.06);">
+              <div style="color:#94a3b8;font-size:8px;">Colaboradores</div>
+              <div style="color:#1e40af;font-size:16px;font-weight:bold;">24</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:4px;padding:5px;box-shadow:0 1px 3px rgba(0,0,0,.06);">
+              <div style="color:#94a3b8;font-size:8px;">Reembolsos</div>
+              <div style="color:#f59e0b;font-size:16px;font-weight:bold;">7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Light (Azul Corporativo)</h3>
+      <p>Tema claro com sidebar azul escura e conteúdo branco. Visual profissional e limpo, padrão para sistemas empresariais.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dual" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="height:150px;border-radius:6px;overflow:hidden;font-size:10px;position:relative;">
+        <div style="display:flex;height:100%;">
+          <div style="flex:1;background:#0f172a;display:flex;flex-direction:column;align-items:center;padding:8px 4px;gap:4px;">
+            <div style="color:#64748b;font-size:8px;margin-bottom:4px;">DARK</div>
+            <div style="background:#1e293b;width:20px;height:20px;border-radius:4px;"></div>
+            <div style="background:#1e293b;width:20px;height:20px;border-radius:4px;"></div>
+          </div>
+          <div style="flex:2;background:#f8fafc;padding:8px;">
+            <div style="color:#64748b;font-size:8px;margin-bottom:6px;">LIGHT</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+              <div style="background:#fff;border:1px solid #e2e8f0;border-radius:3px;padding:4px;"><div style="color:#94a3b8;font-size:7px;">Cards</div><div style="color:#1e40af;font-weight:bold;">24</div></div>
+              <div style="background:#fff;border:1px solid #e2e8f0;border-radius:3px;padding:4px;"><div style="color:#94a3b8;font-size:7px;">Dados</div><div style="color:#f59e0b;font-weight:bold;">7</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border:2px solid #e2e8f0;border-radius:20px;padding:3px 8px;font-size:9px;font-weight:bold;color:#475569;white-space:nowrap;">🌓 Alternável</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Suporte a Dark/Light</h3>
+      <p>Sistema com toggle dark/light. O usuário escolhe o modo. Requer mais trabalho de implementação mas é o mais flexível.</p>
+    </div>
+  </div>
+
+</div>

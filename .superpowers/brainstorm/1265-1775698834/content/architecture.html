@@ -1,0 +1,88 @@
+<h2>Arquitetura Geral</h2>
+<p class="subtitle">Como o frontend se comunica com a API e gerencia estado</p>
+
+<div style="display:flex;flex-direction:column;gap:20px;max-width:900px;">
+
+  <!-- Layer diagram -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;font-size:12px;">
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;color:#6366f1;margin-bottom:8px;font-size:13px;">🌐 Browser</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:#e0e7ff;color:#3730a3;padding:4px 8px;border-radius:4px;font-size:11px;">Next.js App Router</div>
+        <div style="background:#e0e7ff;color:#3730a3;padding:4px 8px;border-radius:4px;font-size:11px;">React + shadcn/ui + Tailwind</div>
+        <div style="background:#e0e7ff;color:#3730a3;padding:4px 8px;border-radius:4px;font-size:11px;">next-themes (dark/light)</div>
+        <div style="background:#e0e7ff;color:#3730a3;padding:4px 8px;border-radius:4px;font-size:11px;">TanStack Query (cache)</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;color:#059669;margin-bottom:8px;font-size:13px;">🔐 Auth Layer</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:#d1fae5;color:#065f46;padding:4px 8px;border-radius:4px;font-size:11px;">NextAuth.js v5</div>
+        <div style="background:#d1fae5;color:#065f46;padding:4px 8px;border-radius:4px;font-size:11px;">HTTP-only cookie (sessão)</div>
+        <div style="background:#d1fae5;color:#065f46;padding:4px 8px;border-radius:4px;font-size:11px;">JWT + Refresh Token</div>
+        <div style="background:#d1fae5;color:#065f46;padding:4px 8px;border-radius:4px;font-size:11px;">Middleware (proteção rotas)</div>
+      </div>
+    </div>
+
+    <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:14px;">
+      <div style="font-weight:bold;color:#dc2626;margin-bottom:8px;font-size:13px;">⚡ API Client</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:4px;font-size:11px;">Axios (instância global)</div>
+        <div style="background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:4px;font-size:11px;">Interceptor: injeta Bearer</div>
+        <div style="background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:4px;font-size:11px;">Interceptor: 401 → refresh</div>
+        <div style="background:#fee2e2;color:#991b1b;padding:4px 8px;border-radius:4px;font-size:11px;">Service files por módulo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow diagram -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:12px;font-size:13px;">Fluxo de autenticação</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:11px;flex-wrap:wrap;">
+      <div style="background:#dbeafe;color:#1e40af;padding:5px 10px;border-radius:5px;">1. Login (email+senha)</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#dbeafe;color:#1e40af;padding:5px 10px;border-radius:5px;">2. NextAuth → POST /api/Autenticacao/login</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#d1fae5;color:#065f46;padding:5px 10px;border-radius:5px;">3. JWT + RefreshToken em cookie HTTP-only</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#d1fae5;color:#065f46;padding:5px 10px;border-radius:5px;">4. Middleware autoriza rotas por role</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:11px;flex-wrap:wrap;margin-top:8px;">
+      <div style="background:#fef3c7;color:#92400e;padding:5px 10px;border-radius:5px;">JWT expira (2h)</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#fef3c7;color:#92400e;padding:5px 10px;border-radius:5px;">Interceptor 401 detecta</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#fef3c7;color:#92400e;padding:5px 10px;border-radius:5px;">POST /api/Autenticacao/refresh-token</div>
+      <div style="color:#94a3b8;">→</div>
+      <div style="background:#d1fae5;color:#065f46;padding:5px 10px;border-radius:5px;">Novo JWT salvo, request refeita</div>
+    </div>
+  </div>
+
+  <!-- Role access -->
+  <div style="background:var(--card-bg,#f8fafc);border:1px solid var(--border,#e2e8f0);border-radius:8px;padding:16px;">
+    <div style="font-weight:bold;margin-bottom:10px;font-size:13px;">Controle de acesso por role</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:11px;">
+      <div>
+        <div style="background:#fef2f2;color:#991b1b;padding:4px 8px;border-radius:4px;font-weight:bold;margin-bottom:4px;">Administrador</div>
+        <div style="color:#64748b;">✅ Todos os módulos</div>
+        <div style="color:#64748b;">✅ Gestão de usuários</div>
+        <div style="color:#64748b;">✅ Admin (Cargo/Função)</div>
+      </div>
+      <div>
+        <div style="background:#f0fdf4;color:#15803d;padding:4px 8px;border-radius:4px;font-weight:bold;margin-bottom:4px;">Analista Financeiro</div>
+        <div style="color:#64748b;">✅ Dashboard</div>
+        <div style="color:#64748b;">✅ Reembolsos (aprovar)</div>
+        <div style="color:#64748b;">❌ Admin / Usuários</div>
+      </div>
+      <div>
+        <div style="background:#eff6ff;color:#1d4ed8;padding:4px 8px;border-radius:4px;font-weight:bold;margin-bottom:4px;">Colaborador</div>
+        <div style="color:#64748b;">✅ Dashboard</div>
+        <div style="color:#64748b;">✅ Meus reembolsos</div>
+        <div style="color:#64748b;">❌ Admin / Usuários</div>
+      </div>
+    </div>
+  </div>
+
+</div>
