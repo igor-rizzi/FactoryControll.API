@@ -1,10 +1,11 @@
-﻿using FactoryControll.API.Areas.Autenticacao.Models;
+using FactoryControll.API.Areas.Autenticacao.Models;
+using FactoryControll.Application.Interfaces.Services;
+using FactoryControll.Application.Models;
 using FactoryControll.InfraData.Models.Autenticacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -19,16 +20,22 @@ namespace FactoryControll.API.Areas.Autenticacao.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _config;
         private readonly SignInManager<User> _signInManager;
+        private readonly IPasswordResetService _passwordResetService;
 
-        public AutenticacaoController(UserManager<User> userManager, IConfiguration config, SignInManager<User> signInManager)
+        public AutenticacaoController(
+            UserManager<User> userManager,
+            IConfiguration config,
+            SignInManager<User> signInManager,
+            IPasswordResetService passwordResetService)
         {
             _userManager = userManager;
             _config = config;
             _signInManager = signInManager;
+            _passwordResetService = passwordResetService;
         }
 
         [HttpPost("login")]
-        [AllowAnonymousAttribute]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(UserLoginDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
@@ -62,23 +69,20 @@ namespace FactoryControll.API.Areas.Autenticacao.Controllers
         }
 
         [HttpPost("recuperar-senha")]
-        [AllowAnonymousAttribute]
+        [AllowAnonymous]
         public async Task<IActionResult> RecuperarSenha(UserLoginDto model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            await _passwordResetService.SolicitarRecuperacaoAsync(model.Email);
+            return Ok();
+        }
 
-            if (user == null)
-                return Ok();
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            var encodedToken = Uri.EscapeDataString(token);
-
-            var resetLink = $"{_config["FrontEnd:ResetPasswordUrl"]}?email={model.Email}&token={encodedToken}";
-
-            // Aqui você envia o email (SMTP, SendGrid, etc)
-            // emailService.Send(model.Email, resetLink);
-
+        [HttpPost("redefinir-senha")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RedefinirSenha(ResetarSenhaDto model)
+        {
+            var result = await _passwordResetService.RedefinirSenhaAsync(model);
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
             return Ok();
         }
     }
